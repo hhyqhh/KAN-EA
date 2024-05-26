@@ -2,7 +2,7 @@
 
 
 
-This project uses Kolmogorov-Arnold Networks (KANs) within Surrogate-assisted Evolutionary Algorithms (SAEAs) to efficiently solve black-box optimization problems by reducing the dependency on function evaluations. The code supports the use of KANs for regression and classification, improving optimization efficiency through solution selection, thus curtailing function calls. The experiments prove the model's effective integration, showcasing enhanced performance in optimization tasks.
+This project uses `Kolmogorov-Arnold Networks (KANs)` within `Surrogate-assisted Evolutionary Algorithms (SAEAs)` to efficiently solve black-box optimization problems by reducing the dependency on function evaluations. The code supports the use of KANs for regression and classification, improving optimization efficiency through model assisted selection, thus curtailing function calls. The experiments prove the model's effective integration, showcasing enhanced performance in optimization tasks.
 <p align="center">
   <img src="./fig/framework.png" width="50%">
 </p>
@@ -60,4 +60,17 @@ if __name__=='__main__':
                    algorithm,
                    ('n_evals', 300),
                    verbose=True)
+```
+
+
+---
+
+## Limitations:
+
+The current training process of the KANs model is quite time-consuming and has poor compatibility on CUDA. For efficiency, you can refer to some efficient implementations in [awesome-kan](https://github.com/mintisan/awesome-kan) project.
+
+---
+## Cite this work:
+```
+
 ```
