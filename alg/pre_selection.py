@@ -35,7 +35,7 @@ class KAN_SPS(GeneticAlgorithm):
                 reproduction_type=None,
                 model=None,    
                 output=SingleObjectiveOutput(),
-                trail_vectors_num=3,
+                trial_vectors_num=3,
                 rate = 0.5,
                 **kwargs
                 ):
@@ -45,7 +45,7 @@ class KAN_SPS(GeneticAlgorithm):
                             **kwargs)
 
         self.model = model
-        self.trail_vectors_num = trail_vectors_num
+        self.trial_vectors_num = trial_vectors_num
 
         self.rate = rate
 
@@ -93,13 +93,13 @@ class KAN_SPS(GeneticAlgorithm):
 
 
     def preselection_by_KAN(self, trials):
-        trail_vectors_num = self.trail_vectors_num
+        trial_vectors_num = self.trial_vectors_num
         index = trials.get('index')
 
-        trials_ = [trials[i:i + trail_vectors_num] for i in range(0, len(trials), trail_vectors_num)]
+        trials_ = [trials[i:i + trial_vectors_num] for i in range(0, len(trials), trial_vectors_num)]
 
-        scores = np.array([self.model.predict(trial.get("X")) for trial in trials_]).reshape(-1, trail_vectors_num)
-        index_ = np.array(index).reshape(-1, trail_vectors_num)
+        scores = np.array([self.model.predict(trial.get("X")) for trial in trials_]).reshape(-1, trial_vectors_num)
+        index_ = np.array(index).reshape(-1, trial_vectors_num)
 
         if self.model.__class__.__name__ == "KAN_Regressor":
             I_selected = np.argmin(scores, axis=1)
@@ -140,12 +140,12 @@ class KAN_SPS(GeneticAlgorithm):
 
         if self.reproduction_type == "CoDE":
             # CoDE operator can generate multiple offspring 
-            self.reproduction.trail_vectors_num = self.trail_vectors_num
+            self.reproduction.trial_vectors_num = self.trial_vectors_num
             infills = self.reproduction.do(self.problem, self.pop, self.n_offsprings, algorithm=self)
         else:
             # Generate multiple offspring by repeatedly executing operators 
             _infills = []
-            for _ in range(self.trail_vectors_num):
+            for _ in range(self.trial_vectors_num):
                 _infills.append(self.reproduction.do(self.problem, self.pop, self.n_offsprings, algorithm=self))
 
             infills_list = [item for sublist in zip(*_infills) for item in sublist]
@@ -187,7 +187,7 @@ if __name__ == '__main__':
     model = KAN_Regressor()   # USE KAN_Regressor or KAN_Classifier
     # model = KAN_Classifier()  
       
-    algorithm = KAN_SPS(problem=problem, pop_size=50, n_offsprings=50, reproduction_type="CoDE", trail_vectors_num=3,model=model)
+    algorithm = KAN_SPS(problem=problem, pop_size=50, n_offsprings=50, reproduction_type="CoDE", trial_vectors_num=3,model=model)
 
     res = minimize(problem,
                    algorithm,

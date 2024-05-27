@@ -43,7 +43,7 @@ algorithm = KAN_SPS(problem=problem,
                     pop_size=50, 
                     n_offsprings=50, 
                     reproduction_type="CoDE", 
-                    trail_vectors_num=3,
+                    trial_vectors_num=3,
                     model=model
                     )
 

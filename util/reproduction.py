@@ -61,34 +61,14 @@ def get_random_index(current_index, population_size):
 
 class CoDE_Reproduction(InfillCriterion):
     def __init__(self, parameter_pool=None,
-                 trail_vectors_num=3,
+                 trial_vectors_num=3,
                  **kwargs):
         super().__init__(**kwargs)
         if parameter_pool is None:
             parameter_pool = ((1.0, 0.1), (1.0, 0.9), (0.8, 0.2))
         self.parameter_pool = parameter_pool
-        self.trail_vectors_num = trail_vectors_num
+        self.trial_vectors_num = trial_vectors_num
 
-    # def do(self, problem, pop, n_offsprings, **kwargs):
-    #     lb = problem.xl
-    #     ub = problem.xu
-    #
-    #     xs, ys = pop.get("X"), pop.get("F")
-    #     s_best = get_best_solution(pop)
-    #
-    #     # ts = np.tile(xs, [self.trail_vectors_num, 1])
-    #     ts = np.empty(shape=(xs.shape[0] * self.trail_vectors_num, xs.shape[1]))
-    #     for i in range(xs.shape[0]):
-    #         # rand/1/bin;
-    #         ts[i * 3, :] = self.opt1(i, xs, lb, ub)
-    #         # rand/2/bin
-    #         ts[i * 3 + 1, :] = self.opt2(i, xs, lb, ub)
-    #         # current-to-best/1
-    #         ts[i * 3 + 2, :] = self.opt3(i, xs, lb, ub, s_best.get('X'))
-    #
-    #
-    #     trials = Population.new(X=ts)
-    #     return trials
 
     def do(self, problem, pop, n_offsprings, **kwargs):
         lb = problem.xl
@@ -97,20 +77,17 @@ class CoDE_Reproduction(InfillCriterion):
         xs, ys = pop.get("X"), pop.get("F")
         s_best = get_best_solution(pop)
 
-        # 根据trail_vectors_num和决策变量的数量初始化未初始化的数组
-        ts = np.empty(shape=(xs.shape[0] * self.trail_vectors_num, xs.shape[1]))
+
+        ts = np.empty(shape=(xs.shape[0] * self.trial_vectors_num, xs.shape[1]))
 
         for i in range(xs.shape[0]):
-            for j in range(self.trail_vectors_num):
-                idx = i * self.trail_vectors_num + j  # 计算当前试验解的索引
+            for j in range(self.trial_vectors_num):
+                idx = i * self.trial_vectors_num + j  
                 if j % 3 == 0:
-                    # 当j是3的倍数时执行opt1
                     ts[idx, :] = self.opt1(i, xs, lb, ub)
                 elif j % 3 == 1:
-                    # 当j除以3余1时执行opt2
                     ts[idx, :] = self.opt2(i, xs, lb, ub)
                 else:
-                    # 其他情况（即j除以3余2时）执行opt3
                     ts[idx, :] = self.opt3(i, xs, lb, ub, s_best.get('X'))
 
         trials = Population.new(X=ts)
