@@ -9,6 +9,22 @@ This project uses `Kolmogorov-Arnold Networks (KANs)` within `Surrogate-assisted
 
 ---
 
+## Installation
+
+```
+cd KAN-EA
+conda create -n KANEA python=3.10
+conda activate KANEA
+pip install -r requirements.txt
+python setup.py develop
+
+python run_kan_sps.py
+```
+
+
+
+---
+
 ## KANs pre-selection for EA
 run KAN-SPS on Ellipsoid function
 ```python
@@ -71,6 +87,8 @@ The current training process of the KANs model is quite time-consuming and has p
 
 ---
 ## Cite this work:
+Waiting for the paper to be online. It will be updated soon. 😀
+
 ```
 
 ```
