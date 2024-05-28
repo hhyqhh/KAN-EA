@@ -87,8 +87,14 @@ The current training process of the KANs model is quite time-consuming and has p
 
 ---
 ## Cite this work:
-Waiting for the paper to be online. It will be updated soon. 😀
 
 ```
-
+@misc{hao2024look,
+      title={A First Look at Kolmogorov-Arnold Networks in Surrogate-assisted Evolutionary Algorithms}, 
+      author={Hao Hao and Xiaoqun Zhang and Bingdong Li and Aimin Zhou},
+      year={2024},
+      eprint={2405.16494},
+      archivePrefix={arXiv},
+      primaryClass={cs.NE}
+}
 ```
